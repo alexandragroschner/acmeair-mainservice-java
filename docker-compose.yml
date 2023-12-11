@@ -34,6 +34,7 @@ acmeair-nginx1:
     - acmeair-bookingservice-java
     - acmeair-customerservice-java
     - acmeair-flightservice-java
+    - acmeair-rewardservice-java
 
 acmeair-mainservice-java:
   container_name: acmeair-mainservice-java
@@ -56,6 +57,17 @@ acmeair-bloatservice-java:
     - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
   volumes_from:
     - acmeair-bloat-db
+  mem_limit: 512m
+
+acmeair-rewardservice-java:
+  container_name: acmeair-rewardservice-java
+  dockerfile: Dockerfile
+  net: ${NETWORK}
+  build: ../acmeair-rewardservice-java/
+  environment:
+    - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
+    - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
+    - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
   mem_limit: 512m
 
 acmeair-authservice-java:
