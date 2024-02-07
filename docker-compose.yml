@@ -59,6 +59,7 @@ acmeair-bloatservice-java:
     - acmeair-bloat-db
   mem_limit: 512m
 
+#TODO: remove env variables and check if it works
 acmeair-rewardservice-java:
   container_name: acmeair-rewardservice-java
   dockerfile: Dockerfile
@@ -89,6 +90,7 @@ acmeair-bookingservice-java:
     - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
     - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
     - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
+    - ACMEAIR_STACKAA_REWARD_URL=http://acmeair-nginx1/reward
   volumes_from:
     - acmeair-booking-db
   mem_limit: 512m
