@@ -18,6 +18,11 @@ acmeair-flight-db:
   image: mongo
   net: ${NETWORK}
 
+acmeair-reward-db:
+  container_name: acmeair-reward-db
+  image: mongo
+  net: ${NETWORK}
+
 acmeair-nginx1:
   container_name: acmeair-nginx1
   net: ${NETWORK}
@@ -66,9 +71,12 @@ acmeair-rewardservice-java:
   net: ${NETWORK}
   build: ../acmeair-rewardservice-java/
   environment:
+    - MONGO_HOST=acmeair-reward-db
     - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
     - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
     - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
+  volumes_from:
+    - acmeair-reward-db
   mem_limit: 512m
 
 acmeair-authservice-java:
