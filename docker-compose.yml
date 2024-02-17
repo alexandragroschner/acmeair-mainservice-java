@@ -23,6 +23,11 @@ acmeair-reward-db:
   image: mongo
   net: ${NETWORK}
 
+acmeair-car-db:
+  container_name: acmeair-car-db
+  image: mongo
+  net: ${NETWORK}
+
 acmeair-nginx1:
   container_name: acmeair-nginx1
   net: ${NETWORK}
@@ -40,6 +45,7 @@ acmeair-nginx1:
     - acmeair-customerservice-java
     - acmeair-flightservice-java
     - acmeair-rewardservice-java
+    - acmeair-carservice-java
 
 acmeair-mainservice-java:
   container_name: acmeair-mainservice-java
@@ -79,6 +85,17 @@ acmeair-rewardservice-java:
     - acmeair-reward-db
   mem_limit: 512m
 
+acmeair-carservice-java:
+  container_name: acmeair-carservice-java
+  dockerfile: Dockerfile
+  net: ${NETWORK}
+  build: ../acmeair-carservice-java/
+  environment:
+    - MONGO_HOST=acmeair-car-db
+  volumes_from:
+    - acmeair-car-db
+  mem_limit: 512m
+
 acmeair-authservice-java:
   container_name: acmeair-authservice-java
   dockerfile: Dockerfile
@@ -99,6 +116,7 @@ acmeair-bookingservice-java:
     - ACMEAIR_STACKAA_CUSTOMER_URL=http://acmeair-nginx1/customer
     - ACMEAIR_STACKAA_FLIGHT_URL=http://acmeair-nginx1/flight
     - ACMEAIR_STACKAA_REWARD_URL=http://acmeair-nginx1/reward
+    - ACMEAIR_STACKAA_REWARD_URL=http://acmeair-nginx1/car
   volumes_from:
     - acmeair-booking-db
   mem_limit: 512m
