@@ -87,6 +87,7 @@ acmeair-customerservice-java:
   environment:
     - MONGO_HOST=acmeair-customer-db
     - ACMEAIR_STACKAA_AUTH_URL=http://acmeair-nginx1/auth
+    - ACMEAIR_STACKAA_BOOKING_URL=http://acmeair-nginx1/booking
   volumes_from:
     - acmeair-customer-db
   mem_limit: 512m
