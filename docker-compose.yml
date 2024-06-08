@@ -4,6 +4,13 @@ services:
   acmeair-booking-db:
     container_name: acmeair-booking-db
     image: mongo
+    command: --replSet booking
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate() }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      retries: 30
     networks:
       - acmeair
 
